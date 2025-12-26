@@ -28,7 +28,11 @@ export const CONFIG = {
         "assets/doodles/doodle_2.jpg",
         "assets/doodles/doodle_3.jpg",
         "assets/doodles/doodle_4.jpg",
-        "assets/doodles/doodle_5.jpg"
+        "assets/doodles/doodle_5.jpg",
+        "assets/doodles/doodle_6.png",
+        "assets/doodles/doodle_7.jpg",
+        "assets/doodles/doodle_8.jpg",
+        "assets/doodles/doodle_9.jpg"
     ],
 
     // The list of gifts to be shown in the Royal Proclamation
