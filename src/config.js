@@ -15,18 +15,18 @@ export const CONFIG = {
     // The list of gifts to be shown in the Royal Proclamation
     GIFTS: [
         {
-            title: "Emerald iPhone Case",
-            desc: "A sleek and protective case in a beautiful emerald green hue, designed to shine.",
+            title: "The Emerald Solar Aegis",
+            desc: "A sleek and protective shield in a beautiful emerald green hue, crafted to shine.",
             image: "assets/gifts/emerald_case.png"
         },
         {
-            title: "Amethyst iPhone Case",
-            desc: "An elegant violet case that adds a touch of royal magic to your everyday life.",
+            title: "The Amethyst Love Symphony",
+            desc: "An elegant violet talisman that adds a touch of royal magic to your everyday life.",
             image: "assets/gifts/amethyst_case.png"
         },
         {
-            title: "A Royal Café Treat",
-            desc: "A special invitation for coffee and your favorite desserts at your favorite café."
+            title: "The Grand Confectionery Soirée",
+            desc: "A gala of sweet delicacies and choice beverages, held in honor of Her Majesty at her preferred café."
         }
     ],
 
