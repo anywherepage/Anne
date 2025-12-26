@@ -114,6 +114,68 @@ h3 {
     }
 }
 
+/* Doodle Background Animations */
+@keyframes doodle-wiggle {
+
+    0%,
+    100% {
+        background-position: 0% 0%;
+    }
+
+    25% {
+        background-position: 1% 2%;
+    }
+
+    50% {
+        background-position: -1% 1%;
+    }
+
+    75% {
+        background-position: 2% -1%;
+    }
+}
+
+.doodle-bg-layer {
+    position: absolute;
+    inset: 0;
+    opacity: 0.1;
+    /* Very subtle and lightweight */
+    pointer-events: none;
+    z-index: 0;
+    background-repeat: repeat;
+    background-size: 300px;
+    animation: doodle-wiggle 15s infinite ease-in-out;
+}
+
+.bg-hero-doodle {
+    background-image: url('/assets/backgrounds/hero_doodle.png');
+}
+
+.bg-memories-doodle {
+    background-image: url('/assets/backgrounds/memories_doodle.png');
+}
+
+.bg-royal-doodle {
+    background-image: url('/assets/backgrounds/royal_doodle.png');
+}
+
+/* Fallback/Lightweight CSS Patterns for failed generations */
+.bg-reasons-doodle {
+    background-image:
+        radial-gradient(circle, #000 1px, transparent 1px),
+        radial-gradient(circle, #000 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+}
+
+.bg-final-doodle {
+    background-image:
+        linear-gradient(45deg, #000 1px, transparent 1px),
+        linear-gradient(-45deg, #000 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+
+
 .glass-morphism {
     background: var(--glass);
     backdrop-filter: blur(12px);

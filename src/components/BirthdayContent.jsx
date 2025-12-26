@@ -166,6 +166,7 @@ const BirthdayContent = () => {
 
             {/* Hero Section */}
             <section className="h-screen flex flex-col items-center justify-center text-center px-4 relative">
+                <div className="doodle-bg-layer bg-hero-doodle" />
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -198,7 +199,8 @@ const BirthdayContent = () => {
             </section>
 
             {/* Memories Section */}
-            <section className="py-24 px-4 max-w-6xl mx-auto">
+            <section className="py-24 px-4 max-w-6xl mx-auto relative">
+                <div className="doodle-bg-layer bg-memories-doodle" />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
@@ -233,6 +235,7 @@ const BirthdayContent = () => {
 
             {/* Royal Proclamation Section */}
             <section className="py-24 px-4 bg-white relative">
+                <div className="doodle-bg-layer bg-royal-doodle" />
                 <motion.div
                     initial={{ opacity: 0, scaleY: 0 }}
                     whileInView={{ opacity: 1, scaleY: 1 }}
@@ -286,6 +289,7 @@ const BirthdayContent = () => {
 
             {/* Reasons Section */}
             <section className="bg-pink-600 py-24 text-white overflow-hidden relative">
+                <div className="doodle-bg-layer bg-reasons-doodle opacity-5" />
                 <div className="max-w-4xl mx-auto px-4 relative z-10">
                     <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center italic">
                         Reasons Why You're Special
@@ -310,6 +314,7 @@ const BirthdayContent = () => {
 
             {/* Final Message */}
             <section className="py-24 text-center px-4 relative">
+                <div className="doodle-bg-layer bg-final-doodle opacity-5" />
                 <h2 className="text-3xl font-bold text-pink-600 mb-12">Tap to reveal her magic</h2>
 
                 {/* The "Box" */}
