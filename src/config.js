@@ -11,9 +11,9 @@ export const CONFIG = {
 
     // The list of gifts to be shown in the Royal Proclamation
     GIFTS: [
-        { title: "The Culinary Feast", desc: "A candlelit dinner at her favorite sanctuary" },
-        { title: "The Radiant Keepsake", desc: "A token of affection to be cherished forever" },
-        { title: "The Grand Adventure", desc: "A surprise journey yet to be revealed" }
+        { title: "The Emerald Solar Aegis", desc: "A modern talisman of verdant brilliance, armored in glass and kissed by the very sun itself." },
+        { title: "The Amethyst Love Symphony", desc: "A crystalline tapestry of violet hues, where every thread is a note in our eternal melody." },
+        { title: "The Grand Confectionery Soirée", desc: "A gala of sweet delicacies and choice beverages, held in honor of Her Majesty at her preferred café." }
     ],
 
     // Reasons why she's special
