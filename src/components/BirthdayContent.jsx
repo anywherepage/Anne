@@ -313,26 +313,28 @@ const BirthdayContent = () => {
                 <h2 className="text-3xl font-bold text-pink-600 mb-12">Click to open your gift</h2>
 
                 {/* The "Box" */}
-                <div className="relative inline-block">
-                    <AnimatePresence>
-                        {floatingGifts.map(gift => (
-                            <FloatingGift
-                                key={gift.id}
-                                id={gift.id}
-                                src={gift.src}
-                                onRemove={removeGift}
-                            />
-                        ))}
-                    </AnimatePresence>
+                <div className="flex justify-center">
+                    <div className="relative">
+                        <AnimatePresence>
+                            {floatingGifts.map(gift => (
+                                <FloatingGift
+                                    key={gift.id}
+                                    id={gift.id}
+                                    src={gift.src}
+                                    onRemove={removeGift}
+                                />
+                            ))}
+                        </AnimatePresence>
 
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={handleGiftClick}
-                        className="bg-pink-500 hover:bg-pink-600 text-white w-32 h-32 rounded-full flex items-center justify-center shadow-2xl z-10 relative"
-                    >
-                        <Gift size={48} />
-                    </motion.button>
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={handleGiftClick}
+                            className="bg-pink-500 hover:bg-pink-600 text-white w-32 h-32 rounded-full flex items-center justify-center shadow-2xl z-10 relative"
+                        >
+                            <Gift size={48} />
+                        </motion.button>
+                    </div>
                 </div>
 
                 <p className="mt-16 text-pink-300 font-light max-w-xl mx-auto italic">
