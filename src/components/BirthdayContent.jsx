@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { Heart, Stars, Music, Gift, Camera, MessageCircle, ChevronDown } from 'lucide-react';
+import { CONFIG } from '../config';
 
 const HeartParticle = ({ delay }) => (
     <motion.div
@@ -21,8 +22,6 @@ const HeartParticle = ({ delay }) => (
 );
 
 const BirthdayContent = () => {
-    const [showLetters, setShowLetters] = useState(false);
-
     useEffect(() => {
         const duration = 15 * 1000;
         const animationEnd = Date.now() + duration;
@@ -44,15 +43,6 @@ const BirthdayContent = () => {
 
         return () => clearInterval(interval);
     }, []);
-
-    const reasons = [
-        "You make every moment feel like a fairy tale.",
-        "Your smile is the most beautiful thing I've ever seen.",
-        "The way you care for everyone around you.",
-        "How you find magic in the smallest things.",
-        "Your laugh is my favorite melody.",
-        "The way we can talk for hours about nothing."
-    ];
 
     const stars = React.useMemo(() => (
         [...Array(40)].map((_, i) => (
@@ -102,7 +92,7 @@ const BirthdayContent = () => {
                     </motion.div>
                     <h1 className="text-5xl md:text-8xl font-bold mb-6 text-pink-600">
                         Happy Birthday, <br />
-                        <span className="italic font-serif">Princess Anne</span>
+                        <span className="italic font-serif">{CONFIG.ROYAL_TITLE}</span>
                     </h1>
                     <p className="text-xl md:text-2xl text-pink-400 font-light max-w-2xl mx-auto italic">
                         "You are the best thing that ever happened to me. Today is all about you."
@@ -154,6 +144,59 @@ const BirthdayContent = () => {
                 </div>
             </section>
 
+            {/* Royal Proclamation Section */}
+            <section className="py-24 px-4 bg-white relative">
+                <motion.div
+                    initial={{ opacity: 0, scaleY: 0 }}
+                    whileInView={{ opacity: 1, scaleY: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                    className="max-w-3xl mx-auto parchment p-12 md:p-20 text-center scroll-unfurl"
+                >
+                    <div className="mb-8">
+                        <span className="royal-heading text-sm md:text-lg">By Royal Decree</span>
+                    </div>
+
+                    <h2 className="text-4xl md:text-6xl font-serif mb-8 text-[#5d4037]">
+                        The Proclamation of Celebration
+                    </h2>
+
+                    <div className="space-y-6 text-lg md:text-xl font-serif italic text-[#3e2723] leading-relaxed">
+                        <p>
+                            "Know ye that on this day, the <span className="font-bold">27th of December</span>,
+                            we gather in digital spirit to honor the birth of Her Royal Highness,
+                            <span className="font-bold block text-2xl mt-2">{CONFIG.ROYAL_TITLE}</span>"
+                        </p>
+                        <p>
+                            "As the stars align in her favor, the Chancellor of Hearts hereby declares
+                            the commencement of her Birthday festivities. Be it resolved that the
+                            following Royal Offerings shall be bestowed upon her:"
+                        </p>
+                    </div>
+
+                    <div className="my-12 space-y-8">
+                        {CONFIG.GIFTS.map((gift, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 1 + (i * 0.3) }}
+                                className="border-b border-[#d4af37]/30 pb-4"
+                            >
+                                <h3 className="text-xl font-bold text-[#8b4513] uppercase tracking-widest">{gift.title}</h3>
+                                <p className="text-[#5d4037] italic mt-1">{gift.desc}</p>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    <div className="mt-12 text-[#3e2723] font-serif italic">
+                        <p>"Given under our hand and seal this day of revelry."</p>
+                        <div className="seal"></div>
+                        <p className="mt-4 font-bold uppercase tracking-tighter">Chancellor of Hearts</p>
+                    </div>
+                </motion.div>
+            </section>
+
             {/* Reasons Section */}
             <section className="bg-pink-600 py-24 text-white overflow-hidden relative">
                 <div className="max-w-4xl mx-auto px-4 relative z-10">
@@ -161,7 +204,7 @@ const BirthdayContent = () => {
                         Reasons Why You're Special
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {reasons.map((reason, index) => (
+                        {CONFIG.REASONS.map((reason, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 20 }}
@@ -196,7 +239,7 @@ const BirthdayContent = () => {
             </section>
 
             <footer className="py-8 text-center text-pink-300 text-sm">
-                Made with ❤️ for Anne
+                Made with ❤️ for {CONFIG.BIRTHDAY_NAME}
             </footer>
         </div>
     );

@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import CountdownTimer from './components/CountdownTimer';
 import BirthdayContent from './components/BirthdayContent';
+import { CONFIG } from './config';
 import './index.css';
 
 function App() {
   const [isRevealed, setIsRevealed] = useState(false);
-  // Target: Dec 27, 2025 at 00:00:00 IST (GMT+5:30)
-  const targetDate = "2025-12-27T00:00:00+05:30";
 
   useEffect(() => {
     const checkTime = () => {
       const now = new Date();
-      const target = new Date(targetDate);
+      const target = new Date(CONFIG.TARGET_DATE);
       if (now >= target) {
         setIsRevealed(true);
       }
@@ -27,7 +26,7 @@ function App() {
       {isRevealed ? (
         <BirthdayContent />
       ) : (
-        <CountdownTimer targetDate={targetDate} onComplete={() => setIsRevealed(true)} />
+        <CountdownTimer targetDate={CONFIG.TARGET_DATE} onComplete={() => setIsRevealed(true)} />
       )}
     </div>
   );
