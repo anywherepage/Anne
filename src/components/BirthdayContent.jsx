@@ -255,40 +255,63 @@ const BirthdayContent = () => {
                 </motion.div>
             </section>
 
-            {/* Memories Section */}
-            <section className="py-24 px-4 max-w-6xl mx-auto relative">
-                <div className="doodle-bg-layer bg-memories-doodle" />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                    <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        className="relative"
-                    >
-                        <div className="aspect-[4/5] bg-pink-200 rounded-3xl overflow-hidden shadow-2xl transform -rotate-3 hover:rotate-0 transition-transform duration-500">
-                            <img src={CONFIG.MEMORY_IMAGE} alt="Birthday" className="w-full h-full object-cover" />
-                        </div>
-                        <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-yellow-100 rounded-full flex items-center justify-center transform rotate-12 shadow-lg">
-                            <Camera size={48} className="text-yellow-500" />
-                        </div>
-                    </motion.div>
+            {/* Photo Gallery Section - Scattered Photos */}
+            {CONFIG.GALLERY && CONFIG.GALLERY.length > 0 && (
+                <section className="py-24 px-4 max-w-6xl mx-auto relative">
+                    <div className="doodle-bg-layer bg-memories-doodle" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                        {/* Scattered Photos Container */}
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="relative w-full"
+                        >
+                            <div className="grid grid-cols-2 gap-3 md:gap-4">
+                                {CONFIG.GALLERY.slice(0, 6).map((photo, index) => {
+                                    const rotations = [-3, 2, -2, 3, -2, 2];
+                                    return (
+                                        <motion.div
+                                            key={index}
+                                            initial={{ opacity: 0, scale: 0.8 }}
+                                            whileInView={{ opacity: 1, scale: 1 }}
+                                            viewport={{ once: true }}
+                                            transition={{ delay: index * 0.1 }}
+                                            whileHover={{ scale: 1.05, zIndex: 20 }}
+                                            className="bg-white p-1.5 md:p-2 rounded-lg shadow-lg cursor-pointer transition-all duration-300"
+                                            style={{
+                                                transform: `rotate(${rotations[index]}deg)`,
+                                            }}
+                                        >
+                                            <img
+                                                src={`${import.meta.env.BASE_URL || '/'}${photo.src}`}
+                                                alt={photo.caption}
+                                                className="w-full aspect-square object-cover rounded"
+                                            />
+                                            <p className="text-xs text-gray-500 text-center mt-1 truncate">{photo.caption}</p>
+                                        </motion.div>
+                                    );
+                                })}
+                            </div>
+                        </motion.div>
 
-                    <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                    >
-                        <h2 className="text-4xl font-bold mb-6 text-pink-600">{CONFIG.MEMORY_TITLE}</h2>
-                        <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                            {CONFIG.MEMORY_SHORT_STORY}
-                        </p>
-                        <div className="flex gap-4">
-                            <Stars className="text-yellow-400" />
-                            <span className="font-semibold text-pink-500 tracking-wider">EST. {CONFIG.EST_DATE}</span>
-                        </div>
-                    </motion.div>
-                </div>
-            </section>
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                        >
+                            <h2 className="text-4xl font-bold mb-6 text-pink-600">{CONFIG.MEMORY_TITLE}</h2>
+                            <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                                {CONFIG.MEMORY_SHORT_STORY}
+                            </p>
+                            <div className="flex gap-4">
+                                <Stars className="text-yellow-400" />
+                                <span className="font-semibold text-pink-500 tracking-wider">EST. {CONFIG.EST_DATE}</span>
+                            </div>
+                        </motion.div>
+                    </div>
+                </section>
+            )}
 
             {/* Royal Proclamation Section */}
             <section className="py-24 px-4 bg-white relative">

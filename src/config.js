@@ -18,9 +18,9 @@ export const CONFIG = {
     // The year or date the bond was established
     EST_DATE: "2025",
 
-    // Title and short story for the memory section
-    MEMORY_TITLE: "To my favorite person...",
-    MEMORY_SHORT_STORY: "Every hour with you is a gift, but today is extra special. Watching you glow, smile, and happy is the greatest joy of my life.",
+    // Title and short story for the photo gallery section
+    MEMORY_TITLE: "Moments that make you, you",
+    MEMORY_SHORT_STORY: "Every photo captures a piece of your magic—the way you light up a room, the grace in your laughter, and the beauty in just being you. Here's to the person who makes ordinary moments extraordinary.",
 
     // Main hero subtitle
     HERO_SUBTITLE: "To the most wonderful person who makes every moment magical. Today is all about you.",
@@ -28,6 +28,17 @@ export const CONFIG = {
     // Final section titles and messages
     REVEAL_SECTION_TITLE: "Tap to reveal her magic",
     FINAL_MESSAGE: "A glimpse into the beautiful world you create. Every doodle is a masterpiece.",
+
+    // Photo gallery - add your favorite photos of her!
+    // Place images in public/assets/gallery/ folder
+    GALLERY: [
+        { src: "assets/gallery/photo_1.jpg", caption: "Golden hour glow" },
+        { src: "assets/gallery/photo_2.jpg", caption: "Sunshine and smiles" },
+        { src: "assets/gallery/photo_3.png", caption: "Poetry in monochrome" },
+        { src: "assets/gallery/photo_4.jpg", caption: "Elegance personified" },
+        { src: "assets/gallery/photo_5.jpg", caption: "Wild and free" },
+        { src: "assets/gallery/photo_6.jpg", caption: "Royalty in bloom" },
+    ],
 
     // The gallery of doodles/illustrations
     DOODLES: [

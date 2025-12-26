@@ -453,8 +453,16 @@ button {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .md\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
     .md\:text-5xl {
         font-size: 3rem;
+    }
+
+    .md\:text-6xl {
+        font-size: 3.75rem;
     }
 
     .md\:text-7xl {
@@ -467,6 +475,31 @@ button {
 
     .md\:p-20 {
         padding: 5rem;
+    }
+}
+
+/* Mobile-first utilities */
+@media (max-width: 767px) {
+    .fixed.bottom-8.right-8 {
+        bottom: 1rem;
+        right: 1rem;
+    }
+
+    .parchment {
+        padding: 1.5rem !important;
+    }
+
+    .sticky-note {
+        padding: 1rem;
+    }
+
+    .text-8xl {
+        font-size: 3rem;
+    }
+
+    .py-24 {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
     }
 }
 
