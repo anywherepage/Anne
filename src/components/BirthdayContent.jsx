@@ -248,7 +248,7 @@ const BirthdayContent = () => {
                         <p>
                             "Know ye that on this day, the <span className="font-bold">27th of December</span>,
                             we gather in digital spirit to honor the birth of Her Royal Highness,
-                            <span className="font-bold block text-2xl mt-2">{CONFIG.ROYAL_TITLE}</span>"
+                            <span className="font-bold block text-2xl mt-2">{CONFIG.FORMAL_TITLE}</span>"
                         </p>
                         <p>
                             "As the stars align in her favor, the Chancellor of Hearts hereby declares

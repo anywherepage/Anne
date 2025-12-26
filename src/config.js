@@ -2,12 +2,15 @@ export const CONFIG = {
     // The name of the special person
     BIRTHDAY_NAME: "Ananyaa",
 
-    // The formal title/nickname used in the proclamation
-    ROYAL_TITLE: "Princess Ananyaa, the Duchess of Alagathi",
+    // Used for the main greeting
+    ROYAL_TITLE: "Princess Ananyaa",
+
+    // Used for the formal proclamation letter
+    FORMAL_TITLE: "Her Royal Highness, Princess Ananyaa Alagathi, Duchess of Madipakkam",
 
     // The date and time of the reveal in ISO format with timezone
     // Format: YYYY-MM-DDTHH:mm:ss+HH:mm
-    TARGET_DATE: "2025-12-27T00:00:00+05:30",
+    TARGET_DATE: "2025-12-26T00:00:00+05:30",
 
     // The list of gifts to be shown in the Royal Proclamation
     GIFTS: [
