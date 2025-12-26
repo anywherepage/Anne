@@ -311,7 +311,10 @@ const BirthdayContent = () => {
 
                                 {/* Royal Miniature Stamp */}
                                 <div className="royal-stamp">
-                                    <img src="assets/doodles/doodle_12.png" alt="Royal Stamp" />
+                                    <img
+                                        src={CONFIG.DOODLES[index % CONFIG.DOODLES.length]}
+                                        alt="Royal Stamp"
+                                    />
                                 </div>
 
                                 {/* Decorative Doodle Stars */}
