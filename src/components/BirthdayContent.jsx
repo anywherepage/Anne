@@ -219,7 +219,7 @@ const BirthdayContent = () => {
                         className="relative"
                     >
                         <div className="aspect-[4/5] bg-pink-200 rounded-3xl overflow-hidden shadow-2xl transform -rotate-3 hover:rotate-0 transition-transform duration-500">
-                            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=800" alt="Birthday" className="w-full h-full object-cover" />
+                            <img src={CONFIG.MEMORY_IMAGE} alt="Birthday" className="w-full h-full object-cover" />
                         </div>
                         <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-yellow-100 rounded-full flex items-center justify-center transform rotate-12 shadow-lg">
                             <Camera size={48} className="text-yellow-500" />
@@ -239,7 +239,7 @@ const BirthdayContent = () => {
                         </p>
                         <div className="flex gap-4">
                             <Stars className="text-yellow-400" />
-                            <span className="font-semibold text-pink-500 tracking-wider">EST. 2025</span>
+                            <span className="font-semibold text-pink-500 tracking-wider">EST. {CONFIG.EST_DATE}</span>
                         </div>
                     </motion.div>
                 </div>
