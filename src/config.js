@@ -22,6 +22,13 @@ export const CONFIG = {
     MEMORY_TITLE: "To my favorite person...",
     MEMORY_SHORT_STORY: "Every hour with you is a gift, but today is extra special. Watching you glow, smile, and happy is the greatest joy of my life.",
 
+    // Main hero subtitle
+    HERO_SUBTITLE: "To the most wonderful person who makes every moment magical. Today is all about you.",
+
+    // Final section titles and messages
+    REVEAL_SECTION_TITLE: "Tap to reveal her magic",
+    FINAL_MESSAGE: "A glimpse into the beautiful world you create. Every doodle is a masterpiece.",
+
     // The gallery of doodles/illustrations
     DOODLES: [
         "assets/doodles/doodle_1.jpg",
@@ -63,11 +70,12 @@ export const CONFIG = {
 
     // Reasons why she's special
     REASONS: [
-        "You make every moment feel like a fairy tale.",
-        "Your smile is the most beautiful thing I've ever seen.",
-        "The way you care for everyone around you.",
-        "How you find magic in the smallest things.",
-        "Your laugh is my favorite melody.",
-        "The way we can talk for hours about nothing."
+        "Your playful spirit and the way you keep life full of exciting surprises.",
+        "The way your kindness shines through in every small detail you remember about people.",
+        "How you turn every ordinary moment into an extraordinary adventure.",
+        "Being my ultimate partner-in-crime and the best friend I could ever ask for.",
+        "The effortless, royal grace you carry in everything you do.",
+        "Your incredible nurturing heart that brings healing to everyone around you.",
+        "The way you're always my biggest cheerleader and my most constant, unconditional support."
     ]
 };
