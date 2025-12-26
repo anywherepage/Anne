@@ -22,13 +22,17 @@ const HeartParticle = ({ delay }) => (
 );
 
 const FloatingGift = ({ src, id, onRemove }) => {
-    // Random starting position near the "box" (center-ish bottom)
-    const initialX = (Math.random() - 0.5) * 100; // slightly offset from center
+    // Dynamic base path for both local dev and GitHub Pages
+    const baseUrl = import.meta.env.BASE_URL || '/';
+    const finalSrc = src.startsWith('assets') ? `${baseUrl}${src}` : src;
+
+    // Random starting position near center
+    const initialX = (Math.random() - 0.5) * 60;
 
     return (
         <motion.div
             drag
-            dragConstraints={{ left: -500, right: 500, top: -500, bottom: 500 }}
+            dragConstraints={{ left: -1000, right: 1000, top: -1000, bottom: 1000 }}
             initial={{
                 scale: 0,
                 opacity: 0,
@@ -39,33 +43,43 @@ const FloatingGift = ({ src, id, onRemove }) => {
             animate={{
                 scale: 1,
                 opacity: 1,
-                y: [0, -20, 0], // subtle hover float
-                rotate: [0, 5, -5, 0] // subtle jiggle
+                y: 0,
+                rotate: 0
             }}
+            exit={{ scale: 0, opacity: 0 }}
             transition={{
-                y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-                rotate: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-                scale: { type: "spring", stiffness: 260, damping: 20 },
-                opacity: { duration: 0.5 }
+                scale: { type: "spring", stiffness: 300, damping: 20 },
+                y: { type: "spring", stiffness: 200, damping: 25 }
             }}
             whileHover={{ scale: 1.1, zIndex: 100 }}
-            whileDrag={{ scale: 1.2, zIndex: 100 }}
-            className="fixed bottom-40 left-1/2 -ml-10 z-40 cursor-grab active:cursor-grabbing group"
-            style={{ height: '15vh' }} // Increased slightly from 5% for better visibility, user said 5% but 15vh is usually more interactive
+            whileDrag={{ scale: 1.1, zIndex: 100 }}
+            className="fixed bottom-56 left-1/2 -ml-16 z-[100] cursor-grab active:cursor-grabbing group"
+            style={{ width: '120px', height: '240px' }}
         >
-            <div className="h-full aspect-[1/2] bg-white rounded-xl shadow-2xl border-2 border-pink-200 p-1 overflow-hidden relative">
-                <img
-                    src={src.startsWith('assets') ? `/Anne/${src}` : src}
-                    alt="Floating Gift"
-                    className="w-full h-full object-contain"
-                />
-                <button
-                    onClick={(e) => { e.stopPropagation(); onRemove(id); }}
-                    className="absolute -top-2 -right-2 bg-pink-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                    <X size={12} />
-                </button>
-            </div>
+            <motion.div
+                animate={{ y: [0, -15, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="w-full h-full"
+            >
+                <div className="w-full h-full bg-white rounded-2xl shadow-2xl border-4 border-pink-100 p-2 overflow-hidden relative">
+                    <img
+                        src={finalSrc}
+                        alt="Gift"
+                        className="w-full h-full object-contain pointer-events-none"
+                        onError={(e) => {
+                            console.warn("Gift image failed:", finalSrc);
+                            // Fallback to relative path if absolute fails
+                            if (finalSrc.startsWith('/')) e.target.src = src;
+                        }}
+                    />
+                    <button
+                        onClick={(e) => { e.stopPropagation(); onRemove(id); }}
+                        className="absolute top-2 right-2 bg-pink-500/80 hover:bg-pink-600 text-white rounded-full p-1 z-50 transition-colors"
+                    >
+                        <X size={16} />
+                    </button>
+                </div>
+            </motion.div>
         </motion.div>
     );
 };
