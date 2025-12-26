@@ -10,7 +10,7 @@ export const CONFIG = {
 
     // The date and time of the reveal in ISO format with timezone
     // Format: YYYY-MM-DDTHH:mm:ss+HH:mm
-    TARGET_DATE: "2025-12-26T00:00:00+05:30",
+    TARGET_DATE: "2025-12-27T00:00:00+05:30",
 
     // The list of gifts to be shown in the Royal Proclamation
     GIFTS: [
