@@ -87,6 +87,7 @@ const FloatingGift = ({ src, id, onRemove }) => {
 const BirthdayContent = () => {
     const [floatingGifts, setFloatingGifts] = useState([]);
     const [giftIndex, setGiftIndex] = useState(0);
+    const [reasonIndex, setReasonIndex] = useState(0);
     const doodleImages = CONFIG.DOODLES;
 
     useEffect(() => {
@@ -288,41 +289,71 @@ const BirthdayContent = () => {
             </section>
 
             {/* Reasons Section */}
-            <section className="py-24 text-gray-800 overflow-hidden relative paper-grid">
+            <section className="py-24 text-gray-800 overflow-hidden relative paper-grid min-h-[700px] flex flex-col items-center justify-center">
                 <div className="doodle-bg-layer bg-reasons-doodle opacity-20" />
-                <div className="max-w-4xl mx-auto px-4 relative z-10">
+                <div className="max-w-4xl mx-auto px-4 relative z-10 w-full flex flex-col items-center">
                     <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center italic text-pink-600">
                         Reasons Why You're Special
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                        {CONFIG.REASONS.map((reason, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
-                                style={{ rotate: index % 2 === 0 ? '-2deg' : '2deg' }}
-                                className="sticky-note group"
-                            >
-                                <div className="washi-tape" />
-                                <div className="text-pink-300 font-bold mb-4 font-serif text-2xl">0{index + 1}</div>
-                                <p className="text-xl font-light text-gray-700 italic">"{reason}"</p>
 
-                                {/* Royal Miniature Stamp */}
-                                <div className="royal-stamp">
-                                    <img
-                                        src={CONFIG.DOODLES[index % CONFIG.DOODLES.length]}
-                                        alt="Royal Stamp"
-                                    />
-                                </div>
+                    <div className="relative w-full max-w-sm h-[400px] flex items-center justify-center">
+                        <AnimatePresence mode='wait'>
+                            {CONFIG.REASONS.map((reason, index) => {
+                                const isCurrent = index === reasonIndex % CONFIG.REASONS.length;
+                                if (!isCurrent) return null;
 
-                                {/* Decorative Doodle Stars */}
-                                <div className="absolute -bottom-2 -right-2 text-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <Stars size={24} />
-                                </div>
-                            </motion.div>
-                        ))}
+                                return (
+                                    <motion.div
+                                        key={index}
+                                        drag="x"
+                                        dragConstraints={{ left: 0, right: 0 }}
+                                        onDragEnd={(e, info) => {
+                                            if (Math.abs(info.offset.x) > 100) {
+                                                setReasonIndex(prev => prev + 1);
+                                            }
+                                        }}
+                                        initial={{ scale: 0.8, opacity: 0, rotate: -10, y: 50 }}
+                                        animate={{ scale: 1, opacity: 1, rotate: index % 2 === 0 ? -2 : 2, y: 0 }}
+                                        exit={{
+                                            x: info => info?.offset?.x > 0 ? 500 : -500,
+                                            opacity: 0,
+                                            rotate: 20,
+                                            transition: { duration: 0.3 }
+                                        }}
+                                        className="sticky-note group absolute w-full cursor-grab active:cursor-grabbing shadow-2xl"
+                                    >
+                                        <div className="washi-tape" />
+                                        <div className="text-pink-300 font-bold mb-4 font-serif text-2xl">0{index + 1}</div>
+                                        <p className="text-2xl font-light text-gray-700 italic text-center py-8 px-4">
+                                            "{reason}"
+                                        </p>
+
+                                        {/* Royal Miniature Stamp */}
+                                        <div className="royal-stamp">
+                                            <img
+                                                src={CONFIG.DOODLES[index % CONFIG.DOODLES.length]}
+                                                alt="Royal Stamp"
+                                            />
+                                        </div>
+
+                                        <div className="mt-8 text-center text-pink-300 text-sm animate-pulse font-medium">
+                                            Swipe left/right or click next...
+                                        </div>
+                                    </motion.div>
+                                );
+                            })}
+                        </AnimatePresence>
+                    </div>
+
+                    <div className="mt-12 flex gap-4">
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => setReasonIndex(prev => prev + 1)}
+                            className="bg-white border-2 border-pink-200 text-pink-500 px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all font-bold flex items-center gap-2"
+                        >
+                            Next Reason <ChevronDown size={20} className="-rotate-90" />
+                        </motion.button>
                     </div>
                 </div>
             </section>
