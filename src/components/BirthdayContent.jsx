@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Heart, Stars, Music, Gift, Camera, MessageCircle, ChevronDown, X } from 'lucide-react';
+import { Heart, Stars, Music, Gift, Camera, MessageCircle, ChevronDown, X, Volume2, VolumeX, Play, Pause } from 'lucide-react';
 import { CONFIG } from '../config';
 
 const HeartParticle = ({ delay }) => (
@@ -88,7 +88,45 @@ const BirthdayContent = () => {
     const [floatingGifts, setFloatingGifts] = useState([]);
     const [giftIndex, setGiftIndex] = useState(0);
     const [reasonIndex, setReasonIndex] = useState(0);
+    const [allReasonsViewed, setAllReasonsViewed] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [isMuted, setIsMuted] = useState(false);
+    const [peepingCharacter, setPeepingCharacter] = useState(null);
+    const audioRef = useRef(null);
     const doodleImages = CONFIG.DOODLES;
+
+    // Zootopia characters that peep from edges
+    const zootopiaCharacters = [
+        { image: 'assets/characters/nick.png', name: 'Nick', edge: 'bottom' },
+        { image: 'assets/characters/judy.png', name: 'Judy', edge: 'left' },
+    ];
+
+    // Peeping character effect
+    useEffect(() => {
+        const showPeepingCharacter = () => {
+            const randomChar = zootopiaCharacters[Math.floor(Math.random() * zootopiaCharacters.length)];
+
+            setPeepingCharacter(randomChar);
+
+            // Hide after 3 seconds
+            setTimeout(() => {
+                setPeepingCharacter(null);
+            }, 3000);
+        };
+
+        // Show first character after 5 seconds
+        const initialTimeout = setTimeout(showPeepingCharacter, 5000);
+
+        // Then show randomly every 8-15 seconds
+        const interval = setInterval(() => {
+            showPeepingCharacter();
+        }, 8000 + Math.random() * 7000);
+
+        return () => {
+            clearTimeout(initialTimeout);
+            clearInterval(interval);
+        };
+    }, []);
 
     useEffect(() => {
         const duration = 15 * 1000;
@@ -151,6 +189,24 @@ const BirthdayContent = () => {
         setFloatingGifts(prev => prev.filter(g => g.id !== id));
     };
 
+    const togglePlay = () => {
+        if (audioRef.current) {
+            if (isPlaying) {
+                audioRef.current.pause();
+            } else {
+                audioRef.current.play();
+            }
+            setIsPlaying(!isPlaying);
+        }
+    };
+
+    const toggleMute = () => {
+        if (audioRef.current) {
+            audioRef.current.muted = !isMuted;
+            setIsMuted(!isMuted);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-pink-50 text-gray-800 selection:bg-pink-200 relative overflow-hidden">
             {/* Moving Background with Stars inside */}
@@ -186,7 +242,7 @@ const BirthdayContent = () => {
                         <span className="italic font-serif">{CONFIG.ROYAL_TITLE}</span>
                     </h1>
                     <p className="text-xl md:text-2xl text-pink-400 font-light max-w-2xl mx-auto italic">
-                        "You are the best thing that ever happened to me. Today is all about you."
+                        "{CONFIG.HERO_SUBTITLE}"
                     </p>
                 </motion.div>
 
@@ -309,7 +365,11 @@ const BirthdayContent = () => {
                                         dragConstraints={{ left: 0, right: 0 }}
                                         onDragEnd={(e, info) => {
                                             if (Math.abs(info.offset.x) > 100) {
-                                                setReasonIndex(prev => prev + 1);
+                                                setReasonIndex(prev => {
+                                                    const next = prev + 1;
+                                                    if (next >= CONFIG.REASONS.length) setAllReasonsViewed(true);
+                                                    return next;
+                                                });
                                             }
                                         }}
                                         initial={{ scale: 0.8, opacity: 0, rotate: -10, y: 50 }}
@@ -345,15 +405,47 @@ const BirthdayContent = () => {
                         </AnimatePresence>
                     </div>
 
-                    <div className="mt-12 flex gap-4">
+                    <div className="mt-12 flex flex-col items-center gap-6">
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            onClick={() => setReasonIndex(prev => prev + 1)}
+                            onClick={() => {
+                                setReasonIndex(prev => {
+                                    const next = prev + 1;
+                                    if (next >= CONFIG.REASONS.length) {
+                                        setAllReasonsViewed(true);
+                                    }
+                                    return next;
+                                });
+                            }}
                             className="bg-white border-2 border-pink-200 text-pink-500 px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all font-bold flex items-center gap-2"
                         >
-                            Next Reason <ChevronDown size={20} className="-rotate-90" />
+                            {reasonIndex >= CONFIG.REASONS.length - 1 ? "Finish Reasons" : "Next Reason"} <ChevronDown size={20} className="-rotate-90" />
                         </motion.button>
+
+                        <AnimatePresence>
+                            {allReasonsViewed && (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                                    className="bg-red-50 border-4 border-dashed border-red-300 p-8 rounded-3xl shadow-2xl max-w-sm text-center relative overflow-hidden"
+                                    style={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 8px #fef2f2' }}
+                                >
+                                    <motion.div
+                                        animate={{ rotate: [0, 5, -5, 0] }}
+                                        transition={{ duration: 0.5, repeat: Infinity }}
+                                        className="inline-block mb-2"
+                                    >
+                                        ⚠️
+                                    </motion.div>
+                                    <h3 className="text-red-600 font-bold mb-2 uppercase tracking-tighter font-serif text-lg">One Last Proclamation</h3>
+                                    <p className="text-red-500 italic font-medium font-serif leading-relaxed">
+                                        "Please don't throw anger attacks today... I am very innocent and just a small humble servant of your kingdom!"
+                                    </p>
+                                    <div className="absolute top-0 left-0 w-full h-1 bg-red-200" />
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
                 </div>
             </section>
@@ -361,7 +453,10 @@ const BirthdayContent = () => {
             {/* Final Message */}
             <section className="py-24 text-center px-4 relative">
                 <div className="doodle-bg-layer bg-final-doodle opacity-5" />
-                <h2 className="text-3xl font-bold text-pink-600 mb-12">Tap to reveal her magic</h2>
+
+
+
+                <h2 className="text-3xl font-bold text-pink-600 mb-12">{CONFIG.REVEAL_SECTION_TITLE}</h2>
 
                 {/* The "Box" */}
                 <div className="flex justify-center">
@@ -389,15 +484,94 @@ const BirthdayContent = () => {
                 </div>
 
                 <p className="mt-16 text-pink-300 font-light max-w-xl mx-auto italic">
-                    "A glimpse into the beautiful world you create. Every doodle is a masterpiece."
+                    "{CONFIG.FINAL_MESSAGE}"
                 </p>
             </section>
 
             <footer className="py-8 text-center text-pink-300 text-sm">
-                Made with ❤️ for {CONFIG.BIRTHDAY_NAME}
+                Made for {CONFIG.BIRTHDAY_NAME}
             </footer>
+
+            {/* Hidden Audio Element */}
+            <audio
+                ref={audioRef}
+                src={`${import.meta.env.BASE_URL || '/'}assets/audio/zootopia.mp3`}
+                loop
+                onEnded={() => setIsPlaying(false)}
+            />
+
+            {/* Floating Music Controls */}
+            <div className="fixed bottom-8 right-8 flex gap-3" style={{ zIndex: 9999 }}>
+                <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={toggleMute}
+                    className="bg-white text-pink-500 w-12 h-12 rounded-full flex items-center justify-center shadow-xl border-2 border-pink-200 cursor-pointer"
+                >
+                    {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+                </motion.button>
+                <motion.button
+                    animate={isPlaying ? { scale: [1, 1.05, 1] } : {}}
+                    transition={{ duration: 1, repeat: Infinity }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={togglePlay}
+                    className="bg-pink-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-xl border-4 border-white cursor-pointer"
+                >
+                    {isPlaying ? <Pause size={24} /> : <Play size={24} className="ml-1" />}
+                </motion.button>
+            </div>
+
+            {/* Peeping Zootopia Characters */}
+            <AnimatePresence>
+                {peepingCharacter && (
+                    <motion.div
+                        key={peepingCharacter.name + peepingCharacter.edge}
+                        initial={{
+                            opacity: 0,
+                            x: peepingCharacter.edge === 'left' ? -100 : peepingCharacter.edge === 'right' ? 100 : 0,
+                            y: peepingCharacter.edge === 'top' ? -100 : peepingCharacter.edge === 'bottom' ? 100 : 0,
+                        }}
+                        animate={{
+                            opacity: 1,
+                            x: peepingCharacter.edge === 'left' ? -30 : peepingCharacter.edge === 'right' ? 30 : 0,
+                            y: peepingCharacter.edge === 'top' ? -30 : peepingCharacter.edge === 'bottom' ? 30 : 0,
+                        }}
+                        exit={{
+                            opacity: 0,
+                            x: peepingCharacter.edge === 'left' ? -100 : peepingCharacter.edge === 'right' ? 100 : 0,
+                            y: peepingCharacter.edge === 'top' ? -100 : peepingCharacter.edge === 'bottom' ? 100 : 0,
+                        }}
+                        transition={{ duration: 0.5, ease: "easeOut" }}
+                        className="fixed pointer-events-none"
+                        style={{
+                            zIndex: 9998,
+                            left: peepingCharacter.edge === 'left' ? 0 : peepingCharacter.edge === 'right' ? 'auto' : '50%',
+                            right: peepingCharacter.edge === 'right' ? 0 : 'auto',
+                            top: peepingCharacter.edge === 'top' ? 0 : peepingCharacter.edge === 'bottom' ? 'auto' : '40%',
+                            bottom: peepingCharacter.edge === 'bottom' ? 0 : 'auto',
+                            transform: peepingCharacter.edge === 'top' || peepingCharacter.edge === 'bottom' ? 'translateX(-50%)' : 'none',
+                        }}
+                    >
+                        <motion.div
+                            animate={{ rotate: [0, -5, 5, 0] }}
+                            transition={{ duration: 0.5, repeat: 2 }}
+                            style={{
+                                filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.4))',
+                            }}
+                        >
+                            <img
+                                src={`${import.meta.env.BASE_URL || '/'}${peepingCharacter.image}`}
+                                alt={peepingCharacter.name}
+                                className="w-16 h-16 object-contain"
+                            />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };
 
 export default BirthdayContent;
+

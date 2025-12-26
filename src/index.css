@@ -205,6 +205,10 @@ button {
     transition: all 0.3s ease;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
 .btn-primary {
     background: var(--primary);
     color: white;
@@ -256,6 +260,14 @@ button {
     position: fixed;
 }
 
+.bottom-8 {
+    bottom: 2rem;
+}
+
+.right-8 {
+    right: 2rem;
+}
+
 .inset-0 {
     top: 0;
     right: 0;
@@ -265,6 +277,10 @@ button {
 
 .z-10 {
     z-index: 10;
+}
+
+.z-1001 {
+    z-index: 1001;
 }
 
 .pointer-events-none {
@@ -402,6 +418,14 @@ button {
 
 .italic {
     font-style: italic;
+}
+
+.-rotate-90 {
+    transform: rotate(-90deg);
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
 }
 
 .tracking-tight {
@@ -604,6 +628,14 @@ button {
     height: 3rem;
 }
 
+.w-16 {
+    width: 4rem;
+}
+
+.h-16 {
+    height: 4rem;
+}
+
 .w-32 {
     width: 8rem;
 }
@@ -634,6 +666,10 @@ button {
 
 .gap-8 {
     gap: 2rem;
+}
+
+.gap-6 {
+    gap: 1.5rem;
 }
 
 .gap-12 {
