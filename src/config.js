@@ -22,6 +22,15 @@ export const CONFIG = {
     MEMORY_TITLE: "To my favorite person...",
     MEMORY_SHORT_STORY: "Every day with you is a gift, but today is extra special. Watching you grow, smile, and achieve your dreams is the greatest joy of my life. You inspire me to be better every single day.",
 
+    // The gallery of doodles/illustrations
+    DOODLES: [
+        "assets/doodles/doodle_1.jpg",
+        "assets/doodles/doodle_2.jpg",
+        "assets/doodles/doodle_3.jpg",
+        "assets/doodles/doodle_4.jpg",
+        "assets/doodles/doodle_5.jpg"
+    ],
+
     // The list of gifts to be shown in the Royal Proclamation
     GIFTS: [
         {

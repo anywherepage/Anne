@@ -87,7 +87,7 @@ const FloatingGift = ({ src, id, onRemove }) => {
 const BirthdayContent = () => {
     const [floatingGifts, setFloatingGifts] = useState([]);
     const [giftIndex, setGiftIndex] = useState(0);
-    const giftImages = CONFIG.GIFTS.filter(g => g.image).map(g => g.image);
+    const doodleImages = CONFIG.DOODLES;
 
     useEffect(() => {
         const duration = 15 * 1000;
@@ -129,11 +129,11 @@ const BirthdayContent = () => {
     ), []);
 
     const handleGiftClick = () => {
-        if (giftImages.length > 0) {
-            const nextGift = giftImages[giftIndex % giftImages.length];
+        if (doodleImages.length > 0) {
+            const nextDoodle = doodleImages[giftIndex % doodleImages.length];
             const newGift = {
                 id: Date.now(),
-                src: nextGift
+                src: nextDoodle
             };
             setFloatingGifts(prev => [...prev, newGift]);
             setGiftIndex(prev => prev + 1);
@@ -310,7 +310,7 @@ const BirthdayContent = () => {
 
             {/* Final Message */}
             <section className="py-24 text-center px-4 relative">
-                <h2 className="text-3xl font-bold text-pink-600 mb-12">Click to open your gift</h2>
+                <h2 className="text-3xl font-bold text-pink-600 mb-12">Tap to reveal her magic</h2>
 
                 {/* The "Box" */}
                 <div className="flex justify-center">
@@ -332,13 +332,13 @@ const BirthdayContent = () => {
                             onClick={handleGiftClick}
                             className="bg-pink-500 hover:bg-pink-600 text-white w-32 h-32 rounded-full flex items-center justify-center shadow-2xl z-10 relative"
                         >
-                            <Gift size={48} />
+                            <Camera size={48} />
                         </motion.button>
                     </div>
                 </div>
 
                 <p className="mt-16 text-pink-300 font-light max-w-xl mx-auto italic">
-                    "I love you more than words can say. Happy Birthday!"
+                    "A glimpse into the beautiful world you create. Every doodle is a masterpiece."
                 </p>
             </section>
 
