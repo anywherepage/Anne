@@ -231,11 +231,9 @@ const BirthdayContent = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-4xl font-bold mb-6 text-pink-600">To my favorite person...</h2>
+                        <h2 className="text-4xl font-bold mb-6 text-pink-600">{CONFIG.MEMORY_TITLE}</h2>
                         <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                            Every day with you is a gift, but today is extra special.
-                            Watching you grow, smile, and achieve your dreams is the greatest joy of my life.
-                            You inspire me to be better every single day.
+                            {CONFIG.MEMORY_SHORT_STORY}
                         </p>
                         <div className="flex gap-4">
                             <Stars className="text-yellow-400" />

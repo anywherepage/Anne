@@ -18,6 +18,10 @@ export const CONFIG = {
     // The year or date the bond was established
     EST_DATE: "2025",
 
+    // Title and short story for the memory section
+    MEMORY_TITLE: "To my favorite person...",
+    MEMORY_SHORT_STORY: "Every day with you is a gift, but today is extra special. Watching you grow, smile, and achieve your dreams is the greatest joy of my life. You inspire me to be better every single day.",
+
     // The list of gifts to be shown in the Royal Proclamation
     GIFTS: [
         {
