@@ -20,7 +20,7 @@ export const CONFIG = {
             image: "assets/gifts/emerald_case.png"
         },
         {
-            title: "The Amethyst Love Symphony",
+            title: "The Amethyst Voyage Symphony",
             desc: "An elegant violet talisman that adds a touch of royal magic to your everyday life.",
             image: "assets/gifts/amethyst_case.png"
         },
