@@ -12,6 +12,12 @@ export const CONFIG = {
     // Format: YYYY-MM-DDTHH:mm:ss+HH:mm
     TARGET_DATE: "2025-12-27T00:00:00+05:30",
 
+    // The main memory image shown in the hero section
+    MEMORY_IMAGE: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=800",
+
+    // The year or date the bond was established
+    EST_DATE: "2025",
+
     // The list of gifts to be shown in the Royal Proclamation
     GIFTS: [
         {
