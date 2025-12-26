@@ -13,7 +13,7 @@ export const CONFIG = {
     TARGET_DATE: "2025-12-26T00:00:00+05:30",
 
     // The main memory image shown in the hero section
-    MEMORY_IMAGE: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=800",
+    MEMORY_IMAGE: "assets/images/disney_memory.png",
 
     // The year or date the bond was established
     EST_DATE: "2025",
@@ -37,7 +37,10 @@ export const CONFIG = {
         "assets/doodles/doodle_11.png",
         "assets/doodles/doodle_12.png",
         "assets/doodles/doodle_13.png",
-        "assets/doodles/doodle_14.png"
+        "assets/doodles/doodle_14.png",
+        "assets/doodles/doodle_15.png",
+        "assets/doodles/doodle_16.png",
+        "assets/doodles/doodle_17.png"
     ],
 
     // The list of gifts to be shown in the Royal Proclamation
