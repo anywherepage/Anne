@@ -1,9 +1,9 @@
 export const CONFIG = {
     // The name of the special person
-    BIRTHDAY_NAME: "Anne",
+    BIRTHDAY_NAME: "Ananyaa",
 
     // The formal title/nickname used in the proclamation
-    ROYAL_TITLE: "Princess Anne",
+    ROYAL_TITLE: "Princess Ananyaa, the Duchess of Alagathi",
 
     // The date and time of the reveal in ISO format with timezone
     // Format: YYYY-MM-DDTHH:mm:ss+HH:mm
