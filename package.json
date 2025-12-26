@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://KingMaker208.github.io/AnneWithAnE",
+  "homepage": "https://anywherepage.github.io/Anne",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
