@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Heart, Stars, Music, Gift, Camera, MessageCircle, ChevronDown } from 'lucide-react';
+import { Heart, Stars, Music, Gift, Camera, MessageCircle, ChevronDown, X } from 'lucide-react';
 import { CONFIG } from '../config';
 
 const HeartParticle = ({ delay }) => (
@@ -21,7 +21,79 @@ const HeartParticle = ({ delay }) => (
     </motion.div>
 );
 
+const GiftReveal = ({ isOpen, onClose }) => {
+    const giftImages = CONFIG.GIFTS.filter(g => g.image).map(g => g.image);
+
+    return (
+        <AnimatePresence>
+            {isOpen && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+                    onClick={onClose}
+                >
+                    <motion.div
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        exit={{ scale: 0, rotate: 180 }}
+                        className="bg-white rounded-3xl p-8 max-w-4xl w-full relative overflow-hidden shadow-2xl"
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <button
+                            onClick={onClose}
+                            className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors z-10"
+                        >
+                            <X size={24} />
+                        </button>
+
+                        <div className="text-center mb-8">
+                            <h2 className="text-3xl font-bold text-pink-600 mb-2">Your Majestic Gifts</h2>
+                            <p className="text-gray-500 italic uppercase tracking-widest text-sm">Bestowed with Love</p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center justify-center">
+                            {giftImages.map((src, idx) => (
+                                <motion.div
+                                    key={idx}
+                                    initial={{ y: 50, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ delay: 0.2 + idx * 0.2 }}
+                                    className="relative group"
+                                >
+                                    <div className="aspect-[1/2] rounded-2xl overflow-hidden shadow-lg border-4 border-pink-100 group-hover:border-pink-300 transition-all duration-300 transform group-hover:scale-[1.02]">
+                                        <img
+                                            src={src.startsWith('assets') ? `/Anne/${src}` : src}
+                                            alt={`Gift ${idx + 1}`}
+                                            className="w-full h-full object-contain bg-gray-50 p-2"
+                                            onError={(e) => {
+                                                console.error("Image failed to load:", src);
+                                                // Fallback if public path is different on local vs gh-pages
+                                                if (src.startsWith('assets')) {
+                                                    e.target.src = src;
+                                                }
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-pink-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                                </motion.div>
+                            ))}
+                        </div>
+
+                        <div className="mt-8 text-center text-gray-400 italic font-light">
+                            "A queen deserves only the finest talismans."
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+    );
+};
+
 const BirthdayContent = () => {
+    const [isGiftOpen, setIsGiftOpen] = useState(false);
+
     useEffect(() => {
         const duration = 15 * 1000;
         const animationEnd = Date.now() + duration;
@@ -61,8 +133,19 @@ const BirthdayContent = () => {
         ))
     ), []);
 
+    const handleGiftClick = () => {
+        setIsGiftOpen(true);
+        confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
+    };
+
     return (
         <div className="min-h-screen bg-pink-50 text-gray-800 selection:bg-pink-200 relative overflow-hidden">
+            <GiftReveal isOpen={isGiftOpen} onClose={() => setIsGiftOpen(false)} />
+
             {/* Moving Background with Stars inside */}
             <div className="starry-background" style={{ background: 'radial-gradient(ellipse at bottom, #fff0f3 0%, #fdf2f8 100%)', opacity: 0.5 }}>
                 <div className="absolute inset-0 pointer-events-none z-0">
@@ -227,7 +310,7 @@ const BirthdayContent = () => {
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } })}
+                    onClick={handleGiftClick}
                     className="bg-pink-500 hover:bg-pink-600 text-white w-32 h-32 rounded-full flex items-center justify-center shadow-2xl mx-auto"
                 >
                     <Gift size={48} />

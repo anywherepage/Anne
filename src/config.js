@@ -11,9 +11,20 @@ export const CONFIG = {
 
     // The list of gifts to be shown in the Royal Proclamation
     GIFTS: [
-        { title: "The Emerald Solar Aegis", desc: "A modern talisman of verdant brilliance, armored in glass and kissed by the very sun itself." },
-        { title: "The Amethyst Love Symphony", desc: "A crystalline tapestry of violet hues, where every thread is a note in our eternal melody." },
-        { title: "The Grand Confectionery Soirée", desc: "A gala of sweet delicacies and choice beverages, held in honor of Her Majesty at her preferred café." }
+        {
+            title: "The Emerald Solar Aegis",
+            desc: "A modern talisman of verdant brilliance, armored in glass and kissed by the very sun itself.",
+            image: "assets/gifts/emerald_case.png"
+        },
+        {
+            title: "The Amethyst Love Symphony",
+            desc: "A crystalline tapestry of violet hues, where every thread is a note in our eternal melody.",
+            image: "assets/gifts/amethyst_case.png"
+        },
+        {
+            title: "The Grand Confectionery Soirée",
+            desc: "A gala of sweet delicacies and choice beverages, held in honor of Her Majesty at her preferred café."
+        }
     ],
 
     // Reasons why she's special
