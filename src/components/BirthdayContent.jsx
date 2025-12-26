@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { Heart, Stars, Music, Gift, Camera, MessageCircle, ChevronDown, X } from 'lucide-react';
 import { CONFIG } from '../config';
@@ -21,75 +21,59 @@ const HeartParticle = ({ delay }) => (
     </motion.div>
 );
 
-const GiftReveal = ({ isOpen, onClose }) => {
-    const giftImages = CONFIG.GIFTS.filter(g => g.image).map(g => g.image);
+const FloatingGift = ({ src, id, onRemove }) => {
+    // Random starting position near the "box" (center-ish bottom)
+    const initialX = (Math.random() - 0.5) * 100; // slightly offset from center
 
     return (
-        <AnimatePresence>
-            {isOpen && (
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-                    onClick={onClose}
+        <motion.div
+            drag
+            dragConstraints={{ left: -500, right: 500, top: -500, bottom: 500 }}
+            initial={{
+                scale: 0,
+                opacity: 0,
+                y: 100,
+                x: initialX,
+                rotate: -45
+            }}
+            animate={{
+                scale: 1,
+                opacity: 1,
+                y: [0, -20, 0], // subtle hover float
+                rotate: [0, 5, -5, 0] // subtle jiggle
+            }}
+            transition={{
+                y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+                rotate: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+                scale: { type: "spring", stiffness: 260, damping: 20 },
+                opacity: { duration: 0.5 }
+            }}
+            whileHover={{ scale: 1.1, zIndex: 100 }}
+            whileDrag={{ scale: 1.2, zIndex: 100 }}
+            className="fixed bottom-40 left-1/2 -ml-10 z-40 cursor-grab active:cursor-grabbing group"
+            style={{ height: '15vh' }} // Increased slightly from 5% for better visibility, user said 5% but 15vh is usually more interactive
+        >
+            <div className="h-full aspect-[1/2] bg-white rounded-xl shadow-2xl border-2 border-pink-200 p-1 overflow-hidden relative">
+                <img
+                    src={src.startsWith('assets') ? `/Anne/${src}` : src}
+                    alt="Floating Gift"
+                    className="w-full h-full object-contain"
+                />
+                <button
+                    onClick={(e) => { e.stopPropagation(); onRemove(id); }}
+                    className="absolute -top-2 -right-2 bg-pink-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
                 >
-                    <motion.div
-                        initial={{ scale: 0, rotate: -180 }}
-                        animate={{ scale: 1, rotate: 0 }}
-                        exit={{ scale: 0, rotate: 180 }}
-                        className="bg-white rounded-3xl p-8 max-w-4xl w-full relative overflow-hidden shadow-2xl"
-                        onClick={e => e.stopPropagation()}
-                    >
-                        <button
-                            onClick={onClose}
-                            className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors z-10"
-                        >
-                            <X size={24} />
-                        </button>
-
-                        <div className="text-center mb-8">
-                            <h2 className="text-3xl font-bold text-pink-600 mb-2">Your Majestic Gifts</h2>
-                            <p className="text-gray-500 italic uppercase tracking-widest text-sm">Bestowed with Love</p>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center justify-center px-8">
-                            {giftImages.map((src, idx) => (
-                                <motion.div
-                                    key={idx}
-                                    initial={{ y: 50, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    transition={{ delay: 0.2 + idx * 0.2 }}
-                                    className="relative group max-w-[260px] mx-auto w-full"
-                                >
-                                    <div className="aspect-[1/2] rounded-3xl overflow-hidden shadow-2xl border-4 border-pink-100 group-hover:border-pink-300 transition-all duration-300 transform group-hover:scale-[1.05] group-hover:-rotate-2">
-                                        <img
-                                            src={src.startsWith('assets') ? `/Anne/${src}` : src}
-                                            alt={`Gift ${idx + 1}`}
-                                            className="w-full h-full object-contain bg-white p-4"
-                                            onError={(e) => {
-                                                console.error("Image failed to load:", src);
-                                                if (src.startsWith('assets')) e.target.src = src;
-                                            }}
-                                        />
-                                    </div>
-                                    <div className="absolute inset-0 bg-gradient-to-t from-pink-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none rounded-3xl" />
-                                </motion.div>
-                            ))}
-                        </div>
-
-                        <div className="mt-8 text-center text-gray-400 italic font-light">
-                            "A queen deserves only the finest talismans."
-                        </div>
-                    </motion.div>
-                </motion.div>
-            )}
-        </AnimatePresence>
+                    <X size={12} />
+                </button>
+            </div>
+        </motion.div>
     );
 };
 
 const BirthdayContent = () => {
-    const [isGiftOpen, setIsGiftOpen] = useState(false);
+    const [floatingGifts, setFloatingGifts] = useState([]);
+    const [giftIndex, setGiftIndex] = useState(0);
+    const giftImages = CONFIG.GIFTS.filter(g => g.image).map(g => g.image);
 
     useEffect(() => {
         const duration = 15 * 1000;
@@ -131,17 +115,40 @@ const BirthdayContent = () => {
     ), []);
 
     const handleGiftClick = () => {
-        setIsGiftOpen(true);
-        confetti({
-            particleCount: 150,
-            spread: 70,
-            origin: { y: 0.6 }
-        });
+        if (giftImages.length > 0) {
+            const nextGift = giftImages[giftIndex % giftImages.length];
+            const newGift = {
+                id: Date.now(),
+                src: nextGift
+            };
+            setFloatingGifts(prev => [...prev, newGift]);
+            setGiftIndex(prev => prev + 1);
+
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.8 }
+            });
+        }
+    };
+
+    const removeGift = (id) => {
+        setFloatingGifts(prev => prev.filter(g => g.id !== id));
     };
 
     return (
         <div className="min-h-screen bg-pink-50 text-gray-800 selection:bg-pink-200 relative overflow-hidden">
-            <GiftReveal isOpen={isGiftOpen} onClose={() => setIsGiftOpen(false)} />
+            {/* Floating Gifts Layer */}
+            <AnimatePresence>
+                {floatingGifts.map(gift => (
+                    <FloatingGift
+                        key={gift.id}
+                        id={gift.id}
+                        src={gift.src}
+                        onRemove={removeGift}
+                    />
+                ))}
+            </AnimatePresence>
 
             {/* Moving Background with Stars inside */}
             <div className="starry-background" style={{ background: 'radial-gradient(ellipse at bottom, #fff0f3 0%, #fdf2f8 100%)', opacity: 0.5 }}>
@@ -302,13 +309,15 @@ const BirthdayContent = () => {
             </section>
 
             {/* Final Message */}
-            <section className="py-24 text-center px-4">
+            <section className="py-24 text-center px-4 relative">
                 <h2 className="text-3xl font-bold text-pink-600 mb-12">Click to open your gift</h2>
+
+                {/* The "Box" */}
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleGiftClick}
-                    className="bg-pink-500 hover:bg-pink-600 text-white w-32 h-32 rounded-full flex items-center justify-center shadow-2xl mx-auto"
+                    className="bg-pink-500 hover:bg-pink-600 text-white w-32 h-32 rounded-full flex items-center justify-center shadow-2xl mx-auto z-10 relative"
                 >
                     <Gift size={48} />
                 </motion.button>
