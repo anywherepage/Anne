@@ -53,30 +53,27 @@ const GiftReveal = ({ isOpen, onClose }) => {
                             <p className="text-gray-500 italic uppercase tracking-widest text-sm">Bestowed with Love</p>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center justify-center">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center justify-center px-8">
                             {giftImages.map((src, idx) => (
                                 <motion.div
                                     key={idx}
                                     initial={{ y: 50, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ delay: 0.2 + idx * 0.2 }}
-                                    className="relative group"
+                                    className="relative group max-w-[260px] mx-auto w-full"
                                 >
-                                    <div className="aspect-[1/2] rounded-2xl overflow-hidden shadow-lg border-4 border-pink-100 group-hover:border-pink-300 transition-all duration-300 transform group-hover:scale-[1.02]">
+                                    <div className="aspect-[1/2] rounded-3xl overflow-hidden shadow-2xl border-4 border-pink-100 group-hover:border-pink-300 transition-all duration-300 transform group-hover:scale-[1.05] group-hover:-rotate-2">
                                         <img
                                             src={src.startsWith('assets') ? `/Anne/${src}` : src}
                                             alt={`Gift ${idx + 1}`}
-                                            className="w-full h-full object-contain bg-gray-50 p-2"
+                                            className="w-full h-full object-contain bg-white p-4"
                                             onError={(e) => {
                                                 console.error("Image failed to load:", src);
-                                                // Fallback if public path is different on local vs gh-pages
-                                                if (src.startsWith('assets')) {
-                                                    e.target.src = src;
-                                                }
+                                                if (src.startsWith('assets')) e.target.src = src;
                                             }}
                                         />
                                     </div>
-                                    <div className="absolute inset-0 bg-gradient-to-t from-pink-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-pink-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none rounded-3xl" />
                                 </motion.div>
                             ))}
                         </div>
