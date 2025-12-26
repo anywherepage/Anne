@@ -288,13 +288,13 @@ const BirthdayContent = () => {
             </section>
 
             {/* Reasons Section */}
-            <section className="bg-pink-600 py-24 text-white overflow-hidden relative">
-                <div className="doodle-bg-layer bg-reasons-doodle opacity-5" />
+            <section className="py-24 text-gray-800 overflow-hidden relative paper-grid">
+                <div className="doodle-bg-layer bg-reasons-doodle opacity-20" />
                 <div className="max-w-4xl mx-auto px-4 relative z-10">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center italic">
+                    <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center italic text-pink-600">
                         Reasons Why You're Special
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                         {CONFIG.REASONS.map((reason, index) => (
                             <motion.div
                                 key={index}
@@ -302,10 +302,17 @@ const BirthdayContent = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
-                                className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-colors"
+                                style={{ rotate: index % 2 === 0 ? '-2deg' : '2deg' }}
+                                className="sticky-note group"
                             >
-                                <div className="text-pink-200 mb-4">0{index + 1}</div>
-                                <p className="text-xl font-light">{reason}</p>
+                                <div className="washi-tape" />
+                                <div className="text-pink-300 font-bold mb-4 font-serif text-2xl">0{index + 1}</div>
+                                <p className="text-xl font-light text-gray-700 italic">"{reason}"</p>
+
+                                {/* Decorative Doodle Stars */}
+                                <div className="absolute -bottom-2 -right-2 text-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <Stars size={24} />
+                                </div>
                             </motion.div>
                         ))}
                     </div>

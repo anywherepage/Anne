@@ -514,6 +514,43 @@ button {
     border-radius: 1.5rem;
 }
 
+/* Scrapbook & Sticky Note Styles */
+.paper-grid {
+    background-color: #fffafb;
+    background-image:
+        linear-gradient(rgba(249, 168, 212, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(249, 168, 212, 0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+
+.sticky-note {
+    background: white;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(249, 168, 212, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.sticky-note:hover {
+    transform: scale(1.02) rotate(0deg) !important;
+    z-index: 10;
+}
+
+.washi-tape {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 30px;
+    background: rgba(236, 72, 153, 0.2);
+    backdrop-filter: blur(2px);
+    border-left: 2px dashed rgba(236, 72, 153, 0.3);
+    border-right: 2px dashed rgba(236, 72, 153, 0.3);
+    rotate: -2deg;
+}
+
 .shadow-2xl {
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }

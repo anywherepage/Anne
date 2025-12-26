@@ -20,7 +20,7 @@ export const CONFIG = {
 
     // Title and short story for the memory section
     MEMORY_TITLE: "To my favorite person...",
-    MEMORY_SHORT_STORY: "Every day with you is a gift, but today is extra special. Watching you grow, smile, and achieve your dreams is the greatest joy of my life. You inspire me to be better every single day.",
+    MEMORY_SHORT_STORY: "Every hour with you is a gift, but today is extra special. Watching you glow, smile, and happy is the greatest joy of my life.",
 
     // The gallery of doodles/illustrations
     DOODLES: [
