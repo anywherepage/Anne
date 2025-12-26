@@ -309,6 +309,11 @@ const BirthdayContent = () => {
                                 <div className="text-pink-300 font-bold mb-4 font-serif text-2xl">0{index + 1}</div>
                                 <p className="text-xl font-light text-gray-700 italic">"{reason}"</p>
 
+                                {/* Royal Miniature Stamp */}
+                                <div className="royal-stamp">
+                                    <img src="assets/doodles/doodle_12.png" alt="Royal Stamp" />
+                                </div>
+
                                 {/* Decorative Doodle Stars */}
                                 <div className="absolute -bottom-2 -right-2 text-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <Stars size={24} />
