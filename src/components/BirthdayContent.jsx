@@ -53,7 +53,7 @@ const FloatingGift = ({ src, id, onRemove }) => {
             }}
             whileHover={{ scale: 1.1, zIndex: 100 }}
             whileDrag={{ scale: 1.1, zIndex: 100 }}
-            className="fixed bottom-56 left-1/2 -ml-16 z-[100] cursor-grab active:cursor-grabbing group"
+            className="absolute bottom-32 left-1/2 -ml-16 z-[100] cursor-grab active:cursor-grabbing group"
             style={{ width: '120px', height: '240px' }}
         >
             <motion.div
@@ -152,18 +152,6 @@ const BirthdayContent = () => {
 
     return (
         <div className="min-h-screen bg-pink-50 text-gray-800 selection:bg-pink-200 relative overflow-hidden">
-            {/* Floating Gifts Layer */}
-            <AnimatePresence>
-                {floatingGifts.map(gift => (
-                    <FloatingGift
-                        key={gift.id}
-                        id={gift.id}
-                        src={gift.src}
-                        onRemove={removeGift}
-                    />
-                ))}
-            </AnimatePresence>
-
             {/* Moving Background with Stars inside */}
             <div className="starry-background" style={{ background: 'radial-gradient(ellipse at bottom, #fff0f3 0%, #fdf2f8 100%)', opacity: 0.5 }}>
                 <div className="absolute inset-0 pointer-events-none z-0">
@@ -325,14 +313,27 @@ const BirthdayContent = () => {
                 <h2 className="text-3xl font-bold text-pink-600 mb-12">Click to open your gift</h2>
 
                 {/* The "Box" */}
-                <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={handleGiftClick}
-                    className="bg-pink-500 hover:bg-pink-600 text-white w-32 h-32 rounded-full flex items-center justify-center shadow-2xl mx-auto z-10 relative"
-                >
-                    <Gift size={48} />
-                </motion.button>
+                <div className="relative inline-block">
+                    <AnimatePresence>
+                        {floatingGifts.map(gift => (
+                            <FloatingGift
+                                key={gift.id}
+                                id={gift.id}
+                                src={gift.src}
+                                onRemove={removeGift}
+                            />
+                        ))}
+                    </AnimatePresence>
+
+                    <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handleGiftClick}
+                        className="bg-pink-500 hover:bg-pink-600 text-white w-32 h-32 rounded-full flex items-center justify-center shadow-2xl z-10 relative"
+                    >
+                        <Gift size={48} />
+                    </motion.button>
+                </div>
 
                 <p className="mt-16 text-pink-300 font-light max-w-xl mx-auto italic">
                     "I love you more than words can say. Happy Birthday!"
